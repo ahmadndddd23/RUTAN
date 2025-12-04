@@ -1,18 +1,19 @@
 <?php
-// Konfigurasi Database
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'inventaris_db');
+// Matikan error reporting biar path server tidak bocor ke publik jika error
+error_reporting(0);
 
-// Koneksi ke database
-$conn = mysqli_connect(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+// Data dari TiDB Cloud (Cek Langkah 2 tadi)
+$host = "gateway01.ap-southeast-1.prod.aws.tidbcloud.com"; // Ganti dengan Host TiDB Anda
+$user = "PgcYvhTrnMwgLYW.root";                    // Ganti dengan User TiDB Anda
+$pass = "hsynlUp5TW4MHL8l ";          // Ganti dengan Password TiDB Anda
+$db_name = "inventaris_db";                     // Nama database (Default TiDB biasanya 'test', kecuali Anda buat baru)
+$port = 4000;                          // Port TiDB selalu 4000
 
-// Cek koneksi
-if (!$conn) {
-    die("Koneksi gagal: " . mysqli_connect_error());
+// Koneksi dengan Port
+$koneksi = mysqli_connect($host, $user, $pass, $db_name, $port);
+
+// Cek Koneksi
+if (!$koneksi) {
+    // Kalau gagal, tampilkan pesan error sederhana
+    die("Gagal koneksi ke Database Cloud: " . mysqli_connect_error());
 }
-
-// Set charset
-mysqli_set_charset($conn, "utf8");
-?>
